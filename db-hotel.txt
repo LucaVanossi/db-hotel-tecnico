@@ -1,0 +1,42 @@
+CREATE TABLE [dbo].[Pagamenti]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [prenotazione_id] INT NOT NULL, 
+    [status] VARCHAR(50) NOT NULL, 
+    CONSTRAINT [FK_Table_prenotazione] FOREIGN KEY ([prenotazione_id]) REFERENCES [prenotazione]([id])
+)
+
+CREATE TABLE [dbo].[Stanze] (
+    [Id]            INT      IDENTITY (1, 1) NOT NULL,
+    [numero_stanza] SMALLINT NOT NULL,
+    [piano_stanza]  TINYINT  NOT NULL,
+    [numero_letti]  TINYINT  NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[prenotazione]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [configurazione_id] INT NOT NULL, 
+    [arrivo] DATE NOT NULL, 
+    [partenza] DATE NOT NULL, 
+    [prezzo_totale] DECIMAL(6, 2) NOT NULL, 
+    CONSTRAINT [FK_prenotazione_configurazioni] FOREIGN KEY ([configurazione_id]) REFERENCES [configurazioni]([id]), 
+)
+
+CREATE TABLE [dbo].[Ospiti]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [name] VARCHAR(50) NOT NULL, 
+    [surname] VARCHAR(50) NOT NULL, 
+    [dataDiNascita] DATETIME NOT NULL, 
+    [tipo_documento] VARCHAR(25) NOT NULL, 
+    [numero_documento] VARCHAR(25) NOT NULL
+)
+
+CREATE TABLE [dbo].[Configurazione]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [titolo] VARCHAR(50) NOT NULL, 
+    [descrizione] TEXT NOT NULL
+)
